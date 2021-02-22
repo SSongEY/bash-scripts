@@ -1,0 +1,22 @@
+[Unit]
+Description=WVA WAS
+Requires=mysqld.service
+After=network.target mysqld.service
+
+[Service]
+Type=forking
+Environment=WCA_LIB=/opt/penta/wca-libs
+Environment=SERVICE_PORT=8081
+Environment=CATALINA_HOME=/opt/tomcat-wva
+Environment=JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+Environment=LD_LIBRARY_PATH=/opt/penta/wca-libs:$LD_LIBRARY_PATH
+
+User=autocrypt
+Group=autocrypt
+
+ExecStart=/opt/tomcat-wva/bin/startup.sh
+ExecStop=/opt/tomcat-wva/bin/shutdown.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
